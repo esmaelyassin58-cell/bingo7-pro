@@ -18,17 +18,15 @@ bot.command("startgame", (ctx) => {
   ctx.reply("🎮 Bingo Game Started!");
 });
 
-// 🎲 NEXT NUMBER
+// 🎰 NEXT NUMBER
 bot.command("next", (ctx) => {
-  let result = nextTurn();
+    let result = nextTurn();
 
-  if (result.winners) {
-    ctx.reply(
-      🎲 Number: ${result.number}\n🏆 Winner(s): ${result.winners.join(", ")}
-    );
-  } else {
-    ctx.reply(🎲 Number: ${result.number});
-  }
+    if (result && result.winners && result.winners.length > 0) {
+        ctx.reply(🎰 Number: ${result.number}\n🏆 Winner(s): ${result.winners.join(", ")});
+    } else {
+        ctx.reply(🎰 Number: ${result.number});
+    }
 });
 
 // 📊 GAME STATE
