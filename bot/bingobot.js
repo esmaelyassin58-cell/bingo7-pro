@@ -1,4 +1,5 @@
 const { Telegraf } = require("telegraf");
+
 const {
   initGame,
   setActivePlayers,
@@ -9,33 +10,64 @@ const {
 
 const bot = new Telegraf(process.env.BOT_TOKEN);
 
-// 🎮 START GAME
+/**
+ * START GAME
+ */
 bot.command("startgame", (ctx) => {
   initGame();
-  setActivePlayers(50); // default 50 players
+  setActivePlayers(50);
   startGame();
 
-  ctx.reply("🎮 Bingo Game Started!");
+  ctx.reply("🎉 Bingo Game Started!");
 });
 
-// 🎰 NEXT NUMBER
+/**
+ * NEXT NUMBER
+ */
 bot.command("next", (ctx) => {
-    let result = nextTurn();
+  const result = nextTurn();
 
-    if (result && result.winners && result.winners.length > 0) {
-        ctx.reply(🎰 Number: ${result.number}\n🏆 Winner(s): ${result.winners.join(", ")});
-    } else {
-        ctx.reply(🎰 Number: ${result.number});
-    }
+  if (!result) {
+    return ctx.reply("⚠️ Game has not started!");
+  }
+
+  const numberText = `🎲 Number: ${result.number}`;
+
+  if (result.winners && result.winners.length > 0) {
+    return ctx.reply(
+      `${numberText}\n🏆 Winner(s): ${result.winners.join(", ")}`
+    );
+  }
+
+  ctx.reply(numberText);
 });
 
-// 📊 GAME STATE
+/**
+ * GAME STATE
+ */
 bot.command("state", (ctx) => {
-  let state = getGameState();
-  ctx.reply(Status: ${state.status}\nCalled: ${state.calledNumbers.length});
+  const state = getGameState();
+
+  if (!state) {
+    return ctx.reply("⚠️ No game state found!");
+  }
+
+  ctx.reply(
+    `📊 Status: ${state.status}\n🔢 Called: ${state.calledNumbers.length}`
+  );
 });
 
-// 🚀 LAUNCH BOT
+/**
+ * ERROR HANDLING
+ */
+bot.catch((err, ctx) => {
+  console.error("Bot error:", err);
+  ctx.reply("❌ Something went wrong!");
+});
+
+/**
+ * START BOT
+ */
 bot.launch();
 
-console.log("🤖 Bingo Bot Running...");
+console.log("🚀 Bingo Bot Running...");
