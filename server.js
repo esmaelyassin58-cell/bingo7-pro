@@ -4,17 +4,22 @@ const express = require("express");
 const app = express();
 app.use(express.json());
 
-// ================== ROUTE ==================
+// ================== HEALTH CHECK ==================
 app.get("/", (req, res) => {
-  res.send("🎉 Bingo Seven Pro Running!");
+  res.status(200).send("🎉 Bingo Seven Pro is LIVE!");
 });
 
-// ================== START BOT ==================
-require("./bot/bingobot");
+// ================== START TELEGRAM BOT ==================
+try {
+  require("./bot/bingobot");
+  console.log("🤖 Telegram bot loaded");
+} catch (err) {
+  console.error("Bot error:", err.message);
+}
 
-// ================== PORT ==================
+// ================== RENDER PORT FIX ==================
 const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, () => {
-  console.log("🚀 Server running on port " + PORT);
+app.listen(PORT, "0.0.0.0", () => {
+  console.log("🚀 Server running on port:", PORT);
 });
