@@ -1,5 +1,5 @@
 require("dotenv").config();
-const { Bot, InlineKeyboard } = require("grammy");
+const { Bot } = require("grammy");
 const mongoose = require("mongoose");
 
 // 1. የቦት ቶከን ማረጋገጫ
@@ -26,7 +26,7 @@ const userSchema = new mongoose.Schema({
 
 const User = mongoose.model("User", userSchema);
 
-// 3. የ /start ኮማንድ እና የመቀበያ መልእክት (መስመር 33 ሙሉ በሙሉ ተስተካክሏል)
+// 3. የ /start ኮማንድ እና የመቀበያ መልእክት
 bot.command("start", async (ctx) => {
     const telegramId = ctx.from.id;
     const username = ctx.from.username || "NoUsername";
@@ -47,13 +47,22 @@ bot.command("start", async (ctx) => {
             console.log(`🆕 New user registered: ${firstName} (${telegramId})`);
         }
 
-        // መስመር 33፡ ስህተቱ የተስተካከለበት እና ስሙ ወደ Bingo 7 የተቀየረበት ዋና መልእክት
+        // መስመር 33፡ ስህተቱ የተስተካከለበት እና ስሙ ወደ Bingo 7 የተቀየረበት ዋና መልእክት (Backticks ` ጥቅም ላይ ውለዋል)
         const welcomeMessage = `👋 እንኳን ወደ Bingo 7 በድጋሚ መጡ!\n\n💰 የአሁኑ ባላንስዎ: ${existingUser.walletBalance} ETB\n\n🎰 ዕድልዎን የሚሞክሩበት ምርጡ የቢንጎ መጫወቻ ቦት። ከታች ያለውን ቁልፍ ተጭነው መጫወት ይችላሉ!`;
 
         // የሚኒ አፑ መክፈቻ ቁልፍ (Web App Button)
-        const keyboard = new InlineKeyboard().webApp("🎮 Play Bingo 7", process.env.WEB_APP_URL || "https://google.com");
-
-        await ctx.reply(welcomeMessage, { reply_markup: keyboard });
+        await ctx.reply(welcomeMessage, {
+            reply_markup: {
+                inline_keyboard: [
+                    [
+                        {
+                            text: "🎮 Play Bingo 7",
+                            web_app: { url: process.env.WEB_APP_URL }
+                        }
+                    ]
+                ]
+            }
+        });
 
     } catch (error) {
         console.error("❌ Error inside start command:", error);
@@ -78,18 +87,12 @@ bot.command("balance", async (ctx) => {
 bot.command("help", async (ctx) => {
     const helpText = "📖 Bingo 7 - እንዴት መጫወት ይቻላል?\n\n" +
                      "1. መጀመሪያ /start የሚለውን በመጫን ቦቱን ያስነሱ።\n" +
-                     "2. 'Play Bingo 7' የሚለውን ቁልፍ ተጭነው ሚኒ አፑን ይክፈቱ።\n" +
-                     "3. የሚፈልጉትን የመጫወቻ ብር መጠን (ካርቴላ) ይምረጡ።\n" +
+                     "2. 'Play Bingo 7' የሚለውን ቁልፍ ተጭነው ሚኒ አፑን ይክፈቱ。\n" +
+                     "3. የሚፈልጉትን የመጫወቻ ብር መጠን (ካርቴላ) ይምረጡ。\n" +
                      "4. እድልዎን ይሞክሩ እና ያሸንፉ!";
     await ctx.reply(helpText);
 });
 
-// 5. ቦቱን እና ሰርቨሩን የማስነሻ ሎጂክ
-bot.catch((err) => {
-    const ctx = err.ctx;
-    console.error(`❌ Error while handling update ${ctx.update.update_id}:`);
-    console.error(err.error);
-});
-
+// 5. ቦቱን የማስነሻ ኮድ
 bot.start();
 console.log("🤖 Telegram bot loaded successfully inside server!");
