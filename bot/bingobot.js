@@ -1,4 +1,4 @@
-[03/07/2026 21:02] Y: require("dotenv").config();
+require("dotenv").config();
 const { Telegraf, Markup } = require("telegraf");
 const mongoose = require("mongoose");
 const User = require("./models/User"); // የዳታቤዝ ሞዴል
