@@ -116,3 +116,20 @@ function startCountdown(seconds) {
         }
     }, 1000);
 }
+// 🚫 6. ሰከንዱ ሲያልቅ መምረጫውን ማቆም እና ወደ ጨዋታ መግባት
+function endCardSelection() {
+    alert("⏱️ ጊዜው አልቋል! ካርቴላ መምረጥ ተዘግቷል። አሁን ቀጥታ ወደ ጨዋታው እየገባን ነው...");
+    
+    // የሁሉም ሳጥኖች የመንካት እድል (Click) ማገድ
+    const cards = document.querySelectorAll(".bingo-card-item");
+    cards.forEach(card => card.onclick = null);
+
+    // TODO: እዚህ ጋ ቀጥታ ወደ ዋናው የቢንጎ መጫወቻ እና ቁጥሮች መውጫ ገጽ (Game Screen) እናሻግራቸዋለን
+}
+
+// ⬅️ ወደ ኋላ መመለሻ (የታይመር ማቆሚያ ጨምሮ)
+function goBackToHome() {
+    clearInterval(timerInterval);
+    document.getElementById("card-selection-page").classList.remove("active");
+    document.getElementById("home-page").classList.add("active");
+}
