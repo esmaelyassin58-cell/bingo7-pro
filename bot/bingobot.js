@@ -1,7 +1,6 @@
 require("dotenv").config();
 const { Bot } = require("grammy");
 const mongoose = require("mongoose");
-const express = require("express"); // Render የፖርት ችግርን ለመፍታት Express እንጠቀማለን
 
 // 1. የቦት ቶከን ማረጋገጫ
 if (!process.env.BOT_TOKEN) {
@@ -11,21 +10,7 @@ if (!process.env.BOT_TOKEN) {
 
 const bot = new Bot(process.env.BOT_TOKEN);
 
-// 2. የዌብ ሰርቨር አወቃቀር (Render "Open Port Detected" እንዲልና ሰርቨሩ እንዳይቆም ያደርጋል)
-const app = express();
-const PORT = process.env.PORT || 3000;
-
-// Render ሰርቨሩ በህይወት መኖሩን የሚፈትሽበት ገጽ (Health Check)
-app.get("/", (req, res) => {
-    res.send("🎰 Bingo 7 Server is Running Perfectly!");
-});
-
-// የዌብ ሰርቨሩን በ Render በተሰጠው ፖርት ላይ ማስነሳት
-app.listen(PORT, () => {
-    console.log(`🌐 Web server is listening on port ${PORT} for Render!`);
-});
-
-// 3. የሞንጎ ዲቢ (MongoDB) ግንኙነት
+// 2. የሞንጎ ዲቢ (MongoDB) ግንኙነት
 mongoose.connect(process.env.MONGO_URI || "mongodb://localhost:27017/bingo7")
     .then(() => console.log("💾 MongoDB connected successfully for Bingo 7!"))
     .catch(err => console.error("❌ MongoDB connection error:", err));
@@ -41,7 +26,7 @@ const userSchema = new mongoose.Schema({
 
 const User = mongoose.model("User", userSchema);
 
-// 4. የ /start ኮማንድ እና የመቀበያ መልእክት
+// 3. የ /start ኮማንድ እና የመቀበያ መልእክት
 bot.command("start", async (ctx) => {
     const telegramId = ctx.from.id;
     const username = ctx.from.username || "NoUsername";
@@ -62,8 +47,8 @@ bot.command("start", async (ctx) => {
             console.log(`🆕 New user registered: ${firstName} (${telegramId})`);
         }
 
-        // ስሙ ወደ Bingo 7 የተቀየረበት ዋና መልእክት
-        const welcomeMessage = `👋 እንኳን ወደ Bingo 7 በደህና መጡ!\n\n🎰 ዕድልዎን የሚሞክሩበት ምርጡ የቢንጎ መጫወቻ ቦት።\n\n💰 ጨዋታውን ለመጀመር ከታች ያለውን ቁልፍ ይጫኑ!`;
+        // መስመር 33፡ ስህተቱ የተስተካከለበት እና ስሙ ወደ Bingo 7 የተቀየረበት ዋና መልእክት (Backticks ` ጥቅም ላይ ውለዋል)
+        const welcomeMessage = `👋 እንኳን ወደ Bingo 7 በድጋሚ መጡ!\n\n💰 የአሁኑ ባላንስዎ: ${existingUser.walletBalance} ETB\n\n🎰 ዕድልዎን የሚሞክሩበት ምርጡ የቢንጎ መጫወቻ ቦት። ከታች ያለውን ቁልፍ ተጭነው መጫወት ይችላሉ!`;
 
         // የሚኒ አፑ መክፈቻ ቁልፍ (Web App Button)
         await ctx.reply(welcomeMessage, {
@@ -85,7 +70,7 @@ bot.command("start", async (ctx) => {
     }
 });
 
-// 5. ተጨማሪ አጋዥ የቦት ኮማንዶች (ባላንስ ለማየት)
+// 4. ተጨማሪ አጋዥ የቦት ኮማንዶች (ለምሳሌ ባላንስ ለማየት)
 bot.command("balance", async (ctx) => {
     try {
         const existingUser = await User.findOne({ telegramId: ctx.from.id });
@@ -108,6 +93,6 @@ bot.command("help", async (ctx) => {
     await ctx.reply(helpText);
 });
 
-// 6. ቦቱን የማስነሻ ኮድ
+// 5. ቦቱን የማስነሻ ኮድ
 bot.start();
 console.log("🤖 Telegram bot loaded successfully inside server!");
