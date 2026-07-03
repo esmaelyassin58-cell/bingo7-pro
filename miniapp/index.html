@@ -70,3 +70,28 @@
     <script src="app.js"></script>
 </body>
 </html>
+<div id="game-play-page" class="page">
+    <div class="current-call-container">
+        <div class="caller-circle" id="current-called-number">🔊...</div>
+        <p class="call-status">የቁጥር ጥሪ በመደረግ ላይ ነው...</p>
+    </div>
+
+    <div class="game-board-flex">
+        <div class="board-75-grid" id="board-75-container">
+            </div>
+
+        <div class="player-active-cards" id="player-cards-container">
+            </div>
+    </div>
+</div>
+
+<div id="winner-popup" class="winner-overlay">
+    <div class="winner-modal">
+        <h2 class="winner-title">🎉 BINGO! 🎉</h2>
+        <h4 class="winner-card-id">🏆 አሸናፊ ካርቴላ ቁጥር: <span id="win-card-number">#00</span></h4>
+        
+        <div class="zoomed-card" id="zoomed-card-matrix"></div>
+        
+        <p class="popup-timer">ይህ ገጽ በ <span id="popup-countdown">10</span> ሰከንድ ውስጥ ይዘጋል...</p>
+    </div>
+</div>
