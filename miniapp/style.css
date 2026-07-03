@@ -1,9 +1,154 @@
+/* 🌚 አጠቃላይ ገጽታ (Dark Mode) */
 body {
-  font-family: Arial;
-  text-align: center;
-  margin-top: 50px;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background-color: #182533; /* የቴሌግራም ዳርክ ከለር */
+    color: #ffffff;
+    user-select: none;
 }
-button {
-  padding: 10px 20px;
-  margin: 10px;
+
+.app-container {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 70px 16px 20px 16px; /* ከላይ የአናት ባር እንዳይሸፍነው 70px ክፍተት */
+}
+
+/* 🔝 የአናት ባር ስታይል (Top Header) */
+.top-status-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    max-width: 500px;
+    margin: 0 auto;
+    background-color: #202b36;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 16px;
+    border-bottom: 2px solid #2b394a;
+    z-index: 1000;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.status-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 30%;
+}
+
+.status-item.left { align-items: flex-start; }
+.status-item.right { align-items: flex-end; }
+
+.status-item .label {
+    font-size: 11px;
+    color: #7da1c4;
+    margin-bottom: 2px;
+    text-transform: uppercase;
+}
+
+.status-item .value {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.status-item .value.highlight {
+    color: #ffcc00; /* የሽልማት መጠን በቢጫ ከለር እንዲደምቅ */
+    font-size: 18px;
+}
+
+/* 📄 የገጾች መቆጣጠሪያ (Pages Visibility) */
+.page {
+    display: none;
+}
+.page.active {
+    display: block;
+}
+
+/* 🏠 የፊት ገጽ ባነር እና በተኖች */
+.welcome-banner {
+    text-align: center;
+    margin: 20px 0;
+}
+.welcome-banner p { color: #8aa1b5; }
+
+.entry-card {
+    background: linear-gradient(135deg, #2f4356, #202b36);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #3b5166;
+}
+
+.card-detail h4 { margin: 0 0 5px 0; font-size: 18px; }
+.card-detail span { color: #ffcc00; font-size: 14px; }
+
+.action-btn {
+    background-color: #2481cc; /* የቴሌግራም ሰማያዊ በተን */
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.action-btn:active { background-color: #1c66a3; }
+
+/* 🃏 100 ካርቴላ መደርደሪያ (Grid) */
+.timer-box {
+    background-color: #e63946;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    border-radius: 8px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* በአንድ መስመር 5 ሳጥን */
+    gap: 8px;
+    margin-bottom: 20px;
+    max-height: 400px;
+    overflow-y: auto; /* 100ውም ሲበዙ ወደ ታች স্ক্রsurfaceል እንዲያደርጉ */
+    padding: 5px;
+}
+
+/* 📦 ነጠላ የካርቴላ ሳጥን */
+.bingo-card-item {
+    background-color: #2b394a;
+    border: 1px solid #3b5166;
+    border-radius: 6px;
+    aspect-ratio: 1; /* አራት ማዕዘን እኩል ለማድረግ */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+/* ተጫዋቹ ሲገዛው የሚቀየርበት ከለር (የተገለጠ ካርድ) */
+.bingo-card-item.bought {
+    background: linear-gradient(135deg, #ffcc00, #cc9900);
+    color: #182533;
+    border-color: #ffcc00;
+}
+
+.back-btn {
+    background-color: #3b5166;
+    color: white;
+    border: none;
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    cursor: pointer;
 }
