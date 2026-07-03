@@ -30,7 +30,7 @@ bot.start(async (ctx) => {
     if (existingUser) {
       // ተመዝግቦ ከሆነ ቀጥታ ሚኒ አፑን መክፈቻ ቁልፍ ያሳየዋል
       return ctx.reply(
-        👋 እንኳን ወደ Beteseb Bingo በድጋሚ መጡ!\n\n💰 የአሁኑ ባላንስዎ: ${existingUser.walletBalance} ETB,
+       =" 👋 እንኳን ወደ Beteseb Bingo በድጋሚ መጡ!\n\n💰 የአሁኑ ባላንስዎ: ${existingUser.walletBalance} ETB,
         Markup.inlineKeyboard([
           Markup.button.webApp("🎮 Open Bingo", process.env.WEB_APP_URL || "https://your-website-link.com")
         ])
@@ -45,7 +45,7 @@ bot.start(async (ctx) => {
 
     // ለመመዝገብ ስልክ ቁጥር ይጠይቃል
     ctx.reply(
-      👋 እንኳን ወደ Beteseb Bingo በሰላም መጡ!\n\n +
+     " 👋 እንኳን ወደ Beteseb Bingo በሰላም መጡ!\n\n +
       ⚠️ ጨዋታውን ለመጀመርና ወደ ሚኒ አፑ ለመግባት መጀመሪያ ስልክ ቁጥርዎን ማጋራት (Register) ማድረግ አለብዎት።\n +
       ከታች ያለውን "📲 ስልክ ቁጥርህን አጋራ" የሚለውን ቁልፍ ይጫኑ።,
       Markup.keyboard([
