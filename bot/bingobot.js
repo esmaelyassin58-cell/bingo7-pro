@@ -14,11 +14,10 @@ const {
 
 // ቦቱን እና ዳታቤዙን ማስነሳት
 const bot = new Telegraf(process.env.BOT_TOKEN);
+const connectDB = require("../config/db");
 
-mongoose.connect(process.env.MONGO_URI || "mongodb://localhost:2017/bingo_db")
-  .then(() => console.log("💾 MongoDB Connected Successfully!"))
-  .catch((err) => console.error("❌ Database Connection Error:", err));
-
+// ዳታቤዙን ማገናኘት
+connectDB();                                                                                                                                                                 
 // 1. የ /start ኮማንድ (በሪፈራል ሊንክ ሲገቡና አዲስ ሲሆኑ)
 bot.start(async (ctx) => {
   const telegramId = ctx.from.id;
