@@ -1,18 +1,18 @@
 {
-  "name": "bingo-7-bot",
+  "name": "bingo7-pro",
   "version": "1.0.0",
-  "description": "Bingo 7 Telegram Bot and Mini App",
-  "main": "bot/bingobot.js",
+  "description": "Bingo Seven Telegram Mini App Backend",
+  "main": "server.js",
   "scripts": {
-    "start": "node bot/bingobot.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "dotenv": "^16.4.5",
-    "grammy": "^1.23.0",
-    "mongoose": "^8.4.1"
+    "express": "^4.19.2",
+    "mongoose": "^8.4.1",
+    "grammy": "^1.23.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   }
 }
