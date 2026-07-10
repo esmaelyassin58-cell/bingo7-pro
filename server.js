@@ -1,38 +1,8 @@
 require("dotenv").config();
 const express = require("express");
 const path = require("path");
-
-const app = express();
-app.use(express.json());
-
-// ሚኒ አፑ (HTML, CSS, JS) ያለበትን ፎልደር ለሰርቨሩ ማስተዋወቅ
-app.use(express.static(path.join(__dirname, "miniapp")));
-
-// ==================== HEALTH CHECK & MINI APP ROUTE ====================
-app.get("/", (req, res) => {
-    // ሚኒ አፑን ቀጥታ እንዲከፍት ማድረግ
-    res.sendFile(path.join(__dirname, "miniapp", "index.html"));
-});
-
-// ==================== RENDER PORT FIX & START ====================
-const PORT = process.env.PORT || 3000;
-
-app.listen(PORT, "0.0.0.0", () => {
-    console.log(🚀 Server running on port: ${PORT});
-    
-    // ሰርቨሩ ፖርቱን ከፍቶ እንደጨረሰ ቦቱን እዚህ ውስጥ እናስነሳዋለን (የማይዘጋው በዚህ መንገድ ነው)
-    try {
-        require("./bot/bingobot");
-        console.log("🤖 Telegram bot loaded successfully inside server!");
-    } catch (err) {
-        console.error("Bot error:", err.message);
-    }
-});
-require("dotenv").config();
-const express = require("express");
-const path = require("path");
-const connectDB = require("../config/db"); // የconfig/db.js ግንኙነት
-const User = require("../models/user");     // የmodels/user.js ሞዴል
+const connectDB = require("./config/db"); // የconfig/db.js ግንኙነት
+const User = require("./models/user");     // የmodels/user.js ሞዴል
 
 const app = express();
 app.use(express.json());
@@ -41,7 +11,7 @@ app.use(express.json());
 connectDB();
 
 // 🎮 ሚኒ አፑ ያለበትን ፎልደር 'miniapp' ለሰርቨሩ ማስተዋወቅ
-app.use(express.static(path.join(__dirname, "../miniapp")));
+app.use(express.static(path.join(__dirname, "miniapp")));
 
 // ==================== 📊 የዳሽቦርድ መረጃ አቅራቢ API ====================
 app.get("/api/dashboard", async (req, res) => {
@@ -78,18 +48,18 @@ app.get("/api/dashboard", async (req, res) => {
 // ==================== HEALTH CHECK & MINI APP ROUTE ====================
 app.get("/", (req, res) => {
     // ሚኒ አፑን ቀጥታ እንዲከፍት ማድረግ
-    res.sendFile(path.join(__dirname, "../miniapp", "index.html"));
+    res.sendFile(path.join(__dirname, "miniapp", "index.html"));
 });
 
 // ==================== RENDER PORT FIX & START ====================
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 10000;
 
 app.listen(PORT, "0.0.0.0", () => {
-    console.log(🚀 Server running on port: ${PORT});
+    console.log(`🚀 Server running on port: ${PORT}`);
     
-    // ሰርቨሩ ሲነሳ በ boot/ ፎልደር ውስጥ ያለውን 'bingobot.js' ያስነሳል
+    // ሰርቨሩ ሲነሳ በ bot/ ፎልደር ውስጥ ያለውን 'bot.js' ያስነሳል
     try {
-        require("../boot/bingobot"); 
+        require("./bot/bot"); 
         console.log("🤖 Telegram bot loaded successfully inside server!");
     } catch (err) {
         console.error("Bot loading error:", err.message);
