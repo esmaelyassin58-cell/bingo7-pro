@@ -1,8 +1,8 @@
 require("dotenv").config();
 const express = require("express");
 const path = require("path");
-const connectDB = require("./config/db"); // የconfig/db.js ግንኙነት
-const User = require("./models/user");     // የmodels/user.js ሞዴል
+const connectDB = require("./config/db"); // ተስተካከለ፡ ከጎን ስላለ ./ ሆነ
+const User = require("./models/user");     // ተስተካከለ፡ ከጎን ስላለ ./ ሆነ
 
 const app = express();
 app.use(express.json());
@@ -57,9 +57,14 @@ const PORT = process.env.PORT || 10000;
 app.listen(PORT, "0.0.0.0", () => {
     console.log(`🚀 Server running on port: ${PORT}`);
     
-    // ሰርቨሩ ሲነሳ በ bot/ ፎልደር ውስጥ ያለውን 'bot.js' ያስነሳል
+    // ሰርቨሩ ሲነሳ በ bot/ ፎልደር ውስጥ ያለውን ቦት በደህና ይፈልጋል
     try {
-        require("./bot/bot"); 
+        // በ bot ፎልደር ውስጥ ያለው ፋይል ስሙ bingobot ወይም bot ሊሆን ስለሚችል በ 2ቱም ይሞክራል
+        try {
+            require("./bot/bingobot");
+        } catch (e) {
+            require("./bot/bot");
+        }
         console.log("🤖 Telegram bot loaded successfully inside server!");
     } catch (err) {
         console.error("Bot loading error:", err.message);
